@@ -3,11 +3,13 @@
   <h1>
     Welcome to {{title}}!!
   </h1>
-  <ul>
-	  <li><a href="default.asp">Pulpy</a></li>
-	  <li><a href="news.asp">Dodaj Pulpę</a></li>
-	  <li><a routerLink="/about">About</a></li>
-  </ul>
+  <nav>
+    <ul>
+  	  <li><a routerLink="/dashboard" routerLinkActive="active">Pulpy</a></li>
+  	  <li><a routerLink="/add-entity" routerLinkActive="active">Dodaj Pulpę</a></li>
+  	  <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+    </ul>
+  </nav>
 </div>
 
 <div id="component">
