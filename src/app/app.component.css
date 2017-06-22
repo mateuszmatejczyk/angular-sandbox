@@ -18,10 +18,12 @@ nav li a {
   text-decoration: none;
 }
 
-nav li a.active {
-  background-color: #555;
-}
 
 nav li a:hover {
 	background-color: #111;
 }
+
+nav li a.active {
+  background-color: pink;
+}
+
