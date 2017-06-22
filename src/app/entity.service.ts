@@ -10,6 +10,7 @@ export class EntityService {
     this.addEntity({ id: 0, name: 'Swinia', points: 100 });
     this.addEntity({ id: 1, name: 'Seba', points: 50 });
     this.addEntity({ id: 2, name: 'Maciore', points: 300 });
+    this.addEntity({ id: 3, name: 'Pulpe', points: 500 });
   }
 
   getEntities(): Entity[] {
