@@ -1,3 +1,6 @@
-<p>
-  Here you will see the list of existing Pulps.
-</p>
+<h2>My Pulps:</h2>
+<ul class="entities">
+  <li *ngFor="let entity of entities">
+    <span class="id">{{entity.id}}</span> {{entity.name}} <span class="points">{{entity.points}}</span>
+  </li>
+</ul>
