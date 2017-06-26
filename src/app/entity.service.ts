@@ -1,23 +1,40 @@
 import { Injectable } from '@angular/core';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+
 import { Entity } from './data/entity';
 
 @Injectable()
 export class EntityService {
+  private dataSubject: BehaviorSubject<Entity[]>;
   private data: Map<number, Entity> = new Map<number, Entity>();
 
-  constructor() {
-    this.addEntity({ id: 0, name: 'Swinia', points: 100 });
-    this.addEntity({ id: 1, name: 'Seba', points: 50 });
-    this.addEntity({ id: 2, name: 'Maciore', points: 300 });
-    this.addEntity({ id: 3, name: 'Pulpe', points: 500 });
-  }
+  readonly entities: Observable<Entity[]>;
 
-  getEntities(): Entity[] {
-    return Array.from(this.data.values()).sort((e1, e2) => e2.points - e1.points);
+  constructor() {
+    this.addEntity({ id: 0, name: 'Swinia', points: 0 });
+    this.addEntity({ id: 1, name: 'Seba', points: 0 });
+    this.addEntity({ id: 2, name: 'Maciore', points: 0 });
+    this.addEntity({ id: 3, name: 'Pulpe', points: 0 });
+
+    this.dataSubject = new BehaviorSubject(this.extractEntities());
+    this.entities = this.dataSubject.asObservable();
+
+    setInterval( () => {
+      const i = Math.floor(Math.random() * this.data.size);
+      const e = this.data.get(i);
+      e.points += 10;
+
+      this.dataSubject.next(this.extractEntities());
+    }, 200);
   }
 
   addEntity(e: Entity): void {
     this.data.set(e.id, e);
+  }
+
+  private extractEntities(): Entity[] {
+    return Array.from(this.data.values()).sort((e1, e2) => e2.points - e1.points);
   }
 }

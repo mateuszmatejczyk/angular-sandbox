@@ -14,6 +14,6 @@ export class DashboardComponent implements OnInit {
   constructor(private entityService: EntityService) { }
 
   ngOnInit() {
-    this.entities = this.entityService.getEntities();
+    this.entityService.entities.subscribe((data) => this.entities = data);
   }
 }
