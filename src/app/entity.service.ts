@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-
+import 'rxjs/add/operator/toPromise';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-
 import { Entity } from './data/entity';
+import { Headers, Http } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class EntityService {
@@ -12,7 +12,7 @@ export class EntityService {
 
   readonly entities: Observable<Entity[]>;
 
-  constructor() {
+  constructor(private http: Http) {
     this.dataSubject = new BehaviorSubject(this.extractEntities());
     this.entities = this.dataSubject.asObservable();
 
@@ -34,6 +34,18 @@ export class EntityService {
     this.data.set(e.id, e);
     this.updateSubscribers();
   }
+
+  getData(): Promise<any> {
+    return this.http.get('/api')
+        .toPromise()
+        .then(response => response.json())
+        .catch(this.handleError);
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
+}
 
   private updateSubscribers(): void {
     this.dataSubject.next(this.extractEntities());
